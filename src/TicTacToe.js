@@ -9,7 +9,35 @@ function TicTacToe() {
   const currentBoard = history[step].board;
   const currentPlayer = history[step].player;
   
- 
+  useEffect(() => {
+    const urlState = searchParams.get("state");
+    if (urlState) {
+      try {
+        const { history: savedHistory, step: savedStep } = JSON.parse(
+          decodeURIComponent(urlState)
+        );
+        setHistory(savedHistory);
+        setStep(savedStep);
+      } catch (error) {
+        console.error("Invalid query state");
+      }
+    } else {
+      const localState = localStorage.getItem("ticTacToeState");
+      if (localState) {
+        const { history: savedHistory, step: savedStep } = JSON.parse(localState);
+        setHistory(savedHistory);
+        setStep(savedStep);
+      }
+    }
+  }, []);
+  
+  useEffect(() => {
+    const gameState = JSON.stringify({ history, step });
+    localStorage.setItem("ticTacToeState", gameState);
+    setSearchParams({ state: encodeURIComponent(gameState) });
+  }, [history, step]);
+
+
   const checkWinner = (board) => {
     const lines = [
       [0, 1, 2],
