@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import React, { useState ,useEffect } from "react";
 import { Board, X, O } from "./components/icons/index";
 
 function TicTacToe() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [history, setHistory] = useState([{ board: Array(9).fill(null), player: "X" }]);
-
   const [step, setStep] = useState(0);
+  const currentBoard = history[step].board;
+  const currentPlayer = history[step].player;
+  
+ 
+  const checkWinner = (board) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+    for (let [a, b, c] of lines) {
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a];
+      }
+    }
+    return board.includes(null) ? null : "Draw";
+  };
+
+  const winner = checkWinner(currentBoard);
 
   const handleClick = (index) => {
-    if (currentBoard[index]) return;
+    if (currentBoard[index] || winner) return;
     const newBoard = currentBoard.slice();
     newBoard[index] = currentPlayer;
 
@@ -19,8 +44,6 @@ function TicTacToe() {
     setHistory(newHistory);
     setStep(newHistory.length - 1);
   };
-  const currentBoard = history[step].board;
-  const currentPlayer = history[step].player;
   
   const jumpTo = (move) => setStep(move);
   
@@ -46,7 +69,7 @@ function TicTacToe() {
         ))}
       </div>
       <div className="flex flex-col">
-        <p>winner : </p>
+        <p>{winner ? (winner === "Draw" ? "It's a draw!" : `Winner: ${winner}`) : `Next Player: ${currentPlayer}`}</p>
         <button className="text-left w-24" onClick={() => step > 0 && setStep(step - 1)}>Undo</button>
         <button className="text-left w-24" onClick={() => step < history.length - 1 && setStep(step + 1)}>Redo</button>
         <button className="text-left w-24" onClick={resetGame}>Reset</button>
