@@ -1,14 +1,15 @@
-import './App.css';
-import Logo from './asset/Logo.svg';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TicTacToe from "./TicTacToe"; // مطمئن شوید که مسیر درست است
+import "./App.css";
 
 function App() {
   return (
-    <div className='bg-[#3D7AD6] w-full h-screen flex flex-col justify-center items-center'>
-          <img src={Logo} alt=''/>
-          <p className='text-center text-white'>
-          Tic Tac Toe (armani)
-          </p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TicTacToe />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
