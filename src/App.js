@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TicTacToe from "./TicTacToe"; // مطمئن شوید که مسیر درست است
+import TicTacToe from "./TicTacToe";
 import "./App.css";
 
 function App() {
