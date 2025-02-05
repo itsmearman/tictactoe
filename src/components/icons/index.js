@@ -1,5 +1,7 @@
 export {
     Board,
     X,
-    O
+    O,
+    Player1,
+    Player2
 } from "./icons"
