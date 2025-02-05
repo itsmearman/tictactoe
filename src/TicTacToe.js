@@ -100,9 +100,9 @@ function TicTacToe() {
   };
 
   useEffect(() => {
-    if (winner) {
+    if (winner === "X" || winner === "O") {
       setIsExploding(true);
-      setTimeout(() => setIsExploding(false), 3000);
+      setTimeout(() => setIsExploding(false), 5000);
     }
   }, [winner]);
 

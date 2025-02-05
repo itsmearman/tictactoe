@@ -1,20 +1,18 @@
 import React from "react";
-import ConfettiExplosion from "react-confetti-explosion";
+import Confetti from "react-confetti";
 
 const WinnerModal = ({ winner, resetGame, isExploding }) => {
+  console.log("isExploding:", isExploding);
   return (
     <div className="absolute flex w-full h-screen bg-black bg-opacity-80 items-center justify-center top-0 z-10">
       <div className="w-full sm:w-2/6 h-2/6 bg-white rounded-2xl text-center flex flex-col items-center justify-center gap-10">
         <p className="font-bold text-3xl">
-          {isExploding && (
-            <ConfettiExplosion
-              force="0.6"
-              duration="5000"
-              particleCount="200"
-              floorHeight="1600"
-              floorWidth="1600"
-            />
-          )}
+        {isExploding && (
+         <Confetti
+         width={1600}
+         height={1600}
+       />
+        )}
           {winner === "Draw"
             ? "It's a draw!"
             : `Player ${winner === "X" ? "1" : "2"} wins!`}
