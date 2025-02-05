@@ -1,5 +1,6 @@
 import Logo from './asset/Logo.svg';
 import React, { useState } from 'react';
+import { Board } from './icons/index'
 
 function TicTacToe() {
     const [history] = useState([
@@ -12,7 +13,7 @@ function TicTacToe() {
       <h1 className="text-3xl font-bold underline text-center">Tic Tac Toe <span className='text-sm'>armani</span></h1>
       <div className="board grid grid-cols-3 w-2/5 mx-auto gap-5 rounded-xl border-b-[1rem] border-r-8 border-l-[1rem] border-t-8 border-black">
         {currentBoard.map((cell, index) => (
-          <button className="border border-red-900 rounded-md p-3 h-24" key={index}>{cell}</button>
+          <Board className="w-24 h-24 mx-auto" key={index}>{cell}</Board>
         ))}
       </div>
       <div className='flex flex-col'>
