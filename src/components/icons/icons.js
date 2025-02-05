@@ -4,8 +4,6 @@ import React from "react";
 export const Board = ({ className , color = "#C9F9FC" }) => {
   return (
     <svg
-      width="224"
-      height="223"
       viewBox="0 0 224 223"
       fill="none"
       className={className}
