@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Board, X, O } from "./components/icons/index";
 
 function TicTacToe() {
-  const [history, setHistory] = useState([{ board: Array(9).fill(null) }]);
+  const [history, setHistory] = useState([{ board: Array(9).fill(null), player: "X" }]);
 
   const [step, setStep] = useState(0);
 
   const handleClick = (index) => {
+    if (currentBoard[index]) return;
     const newBoard = currentBoard.slice();
     newBoard[index] = currentPlayer;
 
@@ -20,6 +21,14 @@ function TicTacToe() {
   };
   const currentBoard = history[step].board;
   const currentPlayer = history[step].player;
+  
+  const jumpTo = (move) => setStep(move);
+  
+  const resetGame = () => {
+    setHistory([{ board: Array(9).fill(null), player: "X" }]);
+    setStep(0);
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold underline text-center">
@@ -38,10 +47,19 @@ function TicTacToe() {
       </div>
       <div className="flex flex-col">
         <p>winner : </p>
-        <button className="text-left w-24">Undo</button>
-        <button className="text-left w-24">Redo</button>
-        <button className="text-left w-24">Reset</button>
+        <button className="text-left w-24" onClick={() => step > 0 && setStep(step - 1)}>Undo</button>
+        <button className="text-left w-24" onClick={() => step < history.length - 1 && setStep(step + 1)}>Redo</button>
+        <button className="text-left w-24" onClick={resetGame}>Reset</button>
         <h3>Move History</h3>
+        <ol>
+        {history.map((_, move) => (
+          <li key={move}>
+            <button onClick={() => jumpTo(move)}>
+              {move === 0 ? "Start" : `Move ${move}`}
+            </button>
+          </li>
+        ))}
+      </ol>
       </div>
     </div>
   );
