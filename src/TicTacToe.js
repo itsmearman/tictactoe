@@ -1,6 +1,6 @@
 import Logo from './asset/Logo.svg';
 import React, { useState } from 'react';
-import { Board } from './icons/index'
+import { Board , X , O } from './icons/index'
 
 function TicTacToe() {
     const [history] = useState([

@@ -1,3 +1,5 @@
 export {
-    Board
+    Board,
+    X,
+    O
 } from "./icons"
