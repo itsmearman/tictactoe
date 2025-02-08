@@ -1,4 +1,3 @@
-// utils/gameLogic.js
 export function generateBoardHistory(input) {
     let history = [];
     let board = Array(9).fill(null);

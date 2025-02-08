@@ -50,7 +50,7 @@ function TicTacToe() {
 
     const moves = currentBoard
       .map((cell, index) => (cell ? `${index}${cell}` : ""))
-      .join("");
+      // .join("");
 
     setSearchParams(moves ? { state: moves } : {});
     localStorage.setItem("ticTacToeState", JSON.stringify({ history, step }));
