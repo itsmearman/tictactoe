@@ -14,7 +14,9 @@ function TicTacToe() {
   const [future, setFuture] = useState([]);
   const [isExploding, setIsExploding] = useState(false);
 
-  const currentBoard = Array.isArray(history[step]) ? history[step] : Array(9).fill(null);
+  const currentBoard = Array.isArray(history[step])
+    ? history[step]
+    : Array(9).fill(null);
   const currentPlayer = step % 2 === 0 ? "X" : "O";
   const urlState = searchParams.get("state");
   const savedState = localStorage.getItem("ticTacToeState");
@@ -24,6 +26,7 @@ function TicTacToe() {
     if (urlState) {
       try {
         const historyParam = generateBoardHistory(urlState);
+
         setHistory(historyParam);
         setStep(historyParam.length - 1);
       } catch (error) {
@@ -31,7 +34,8 @@ function TicTacToe() {
       }
     } else if (savedState) {
       try {
-        const { history: savedHistory, step: savedStep } = JSON.parse(savedState);
+        const { history: savedHistory, step: savedStep } =
+          JSON.parse(savedState);
         if (Array.isArray(savedHistory) && savedHistory.length > 0) {
           setHistory(savedHistory);
           setStep(savedStep);
@@ -47,11 +51,18 @@ function TicTacToe() {
 
   useEffect(() => {
     if (!history || history.length === 0 || !history[step]) return;
-
-    const moves = currentBoard
-      .map((cell, index) => (cell ? `${index}${cell}` : ""))
-      // .join("");
-
+    const moveMap = new Map();
+    history.slice(0, step + 1).forEach((stepHistory, stepIndex) => {
+        stepHistory.forEach((cell, index) => {
+            if (cell) {
+                moveMap.set(index, { stepIndex, index, value: cell }); // Only latest move per index
+            }
+        });
+    });
+    const moveOrder = Array.from(moveMap.values());
+    moveOrder.sort((a, b) => a.stepIndex - b.stepIndex);
+    const moves = moveOrder.map(({ index, value }) => `${index}${value}`).join("");
+    console.log(moveOrder);
     setSearchParams(moves ? { state: moves } : {});
     localStorage.setItem("ticTacToeState", JSON.stringify({ history, step }));
   }, [history, step]);
@@ -71,6 +82,7 @@ function TicTacToe() {
     if (history.length > 1) {
       const lastState = history[history.length - 1];
       setHistory(history.slice(0, -1));
+
       setFuture([lastState, ...future]);
       if (step > 0) setStep(step - 1);
     }
@@ -130,7 +142,13 @@ function TicTacToe() {
           </div>
         </div>
       </div>
-      {winner && <WinnerModal winner={winner} resetGame={resetGame} isExploding={isExploding} />}
+      {winner && (
+        <WinnerModal
+          winner={winner}
+          resetGame={resetGame}
+          isExploding={isExploding}
+        />
+      )}
     </div>
   );
 }
