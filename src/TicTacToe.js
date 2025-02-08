@@ -119,7 +119,7 @@ function TicTacToe() {
   }, [winner]);
 
   return (
-    <div className="text-center bg-[url(./asset/Cover.svg)] bg-cover overflow-y-scroll no-scrollbar h-screen">
+    <div className="text-center bg-[url(/Cover.svg)] bg-cover overflow-y-scroll no-scrollbar h-screen">
       <div>
         <div className="flex flex-col sm:flex-row justify-evenly px-4 w-full h-screen">
           <div className="flex flex-col w-full sm:w-2/3 sm:px-40 justify-center gap-5">
